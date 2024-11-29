@@ -4,7 +4,7 @@ from flask import request
 def get_wind_side() -> Optional[str]:
     return request.args.get("wind_side")
 
-def get_calc_values_operand() -> Dict[str, str]:
+def get_calc_values_operand() -> Optional[Dict[str, str]]:
     calc_values = {}
     if request.args.get("value_a") \
         and request.args.get("value_b") \
