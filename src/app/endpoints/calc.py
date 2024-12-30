@@ -1,15 +1,33 @@
 from app import app
 
-from app.functions.query_params_decapsulation import get_calc_values_operand
 from app.backend.calculator import get_calculated_value
+from app.pydantic_validation_models.calculator_validator import CalcValidator
+from pydantic import ValidationError
+from flask import request
 
-@app.route("/calc")
+@app.route("/calc", methods=['GET'])
 def calc():
-    query_result = get_calc_values_operand()
-    if query_result:
-        calc_result = get_calculated_value(operand=query_result["operand"],
-                                       value_a=int(query_result["value_a"]),
-                                       value_b=int(query_result["value_b"]))
+    try:
+        print(request.args.get("operand"))
+        calc_query_results = CalcValidator(
+            value_a=request.args.get("value_a", type=int),
+            value_b=request.args.get("value_b", type=int),
+            operand=request.args.get("operand", type=str))
+        
+        print(calc_query_results.operand)
+        print(type(calc_query_results.operand))
+        
+        calc_result = get_calculated_value(
+            operand=calc_query_results.operand,
+            value_a=calc_query_results.value_a,
+            value_b=calc_query_results.value_b)
+
         return f"Result = {calc_result}"
-    else:
-        return "Calculator is not working, no query params was set."
+
+    except ValidationError as e:
+        return f"We reciewed wrong type on information, validation haven't \
+                passed."
+    
+    except Exception as e:
+        return f"Something went wrong."
+    
