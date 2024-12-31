@@ -8,14 +8,10 @@ from flask import request
 @app.route("/calc", methods=['GET'])
 def calc():
     try:
-        print(request.args.get("operand"))
         calc_query_results = CalcValidator(
             value_a=request.args.get("value_a", type=int),
             value_b=request.args.get("value_b", type=int),
             operand=request.args.get("operand", type=str))
-        
-        print(calc_query_results.operand)
-        print(type(calc_query_results.operand))
         
         calc_result = get_calculated_value(
             operand=calc_query_results.operand,
