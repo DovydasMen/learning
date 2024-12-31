@@ -1,0 +1,2 @@
+python -m pytest tests/ - src folderį parašyti tokią komandą, pythonas sutvarko PATH (PASIDOMĖTI DAUGIAU)
+        -m flag run library module as a script (terminates option list) (PASIDOMĖTI)

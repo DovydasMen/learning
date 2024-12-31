@@ -25,8 +25,7 @@ def calc():
         return f"Result = {calc_result}"
 
     except ValidationError as e:
-        return f"We reciewed wrong type on information, validation haven't \
-                passed."
+        return f"We reciewed wrong type of information, validation haven't passed."
     
     except Exception as e:
         return f"Something went wrong."
